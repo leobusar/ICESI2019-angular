@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="libro-list" *ngIf="libros else loading">
+    <h3> Listado de Libros</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Autor</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let libroItem of libros">
+          <th>{{libroItem.id}}</th>
+          <td>{{libroItem.name}}</td>
+          <td>{{libroItem.author}}</td>
+          <td>
+            <button (click)="mostrarDetalle(libroItem)" class="btn btn-info mr-4">Editar</button>
+            <button (click)="eliminar(libroItem)" class="btn btn-danger">Eliminar</button>
+          </td>
+        </tr>
+       </tbody>
+    </table>
+  </div>
+  <ng-template #loading>
+    <div>Loading...</div>
+  </ng-template>
+  <app-libro-detail [libro]="libroSelected" (guardar)="onSave($event)" ></app-libro-detail>
+</div>
