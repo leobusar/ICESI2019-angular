@@ -13,11 +13,14 @@ export class LibroComponent implements OnInit {
   libros :Libro[];
 
   constructor(private libroService: LibroService) {
+    this.libros = [];
    }
 
   ngOnInit() {
     this.libroSelected = new Libro;
-    this.libros = this.libroService.getLibros();
+    this.libroService.getLibros().subscribe(librosDb =>
+            this.libros = librosDb
+      );
   }
 
   mostrarDetalle(libro: Libro){
@@ -25,15 +28,16 @@ export class LibroComponent implements OnInit {
   }
 
   onSave( libro: Libro){
-    if (!libro.id){
-      libro.id=Math.floor(Math.random()*200)+10;
-      this.libros.push(libro);
-    }
+ //   if (!libro.id){
+//      libro.id=Math.floor(Math.random()*200)+10;
+      this.libroService.addLibro(libro);
+ //   }
   }
 
   eliminar(libro: Libro){
-    let index =  this.libros.findIndex( (libroTmp) => {return libro.id === libroTmp.id} );
-    this.libros.splice(index, 1);
+  //  let index =  this.libros.findIndex( (libroTmp) => {return libro.id === libroTmp.id} );
+  //  this.libros.splice(index, 1);
+    this.libroService.delLibro(libro);
   }
 
 }
